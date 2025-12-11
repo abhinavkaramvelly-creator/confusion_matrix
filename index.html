@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confusion Matrix & Classification Error Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1><i class="fa-solid fa-chart-pie"></i> Confusion Matrix Generator</h1>
+            <p>Interactive Classification Error Demonstration</p>
+        </header>
+
+        <main>
+            <!-- Control & Simulation Section -->
+            <section class="simulation-panel">
+                <div class="panel-header">
+                    <h2><i class="fa-solid fa-gamepad"></i> Simulation Control</h2>
+                    <div class="controls">
+                        <button id="reset-btn" class="btn secondary">New Data</button>
+                        <div class="slider-group">
+                            <label for="noise-level">Data Noise</label>
+                            <input type="range" id="noise-level" min="0" max="100" value="30">
+                        </div>
+                    </div>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="classification-canvas"></canvas>
+                    <div class="overlay-instruction">Drag the line to classify</div>
+                </div>
+                <div class="legend">
+                    <span class="item"><span class="dot actual-pos"></span> Actual Positive</span>
+                    <span class="item"><span class="dot actual-neg"></span> Actual Negative</span>
+                </div>
+            </section>
+
+            <!-- Matrix & Metrics Section -->
+            <section class="analysis-panel">
+                <div class="matrix-wrapper">
+                    <h2>Confusion Matrix</h2>
+                    <div class="confusion-matrix" id="matrix-grid">
+                        <!-- Headers -->
+                        <div class="matrix-header empty"></div>
+                        <div class="matrix-header col-header">Predicted Positive</div>
+                        <div class="matrix-header col-header">Predicted Negative</div>
+                        
+                        <!-- Row 1 -->
+                        <div class="matrix-header row-header">Actual Positive</div>
+                        <div class="cell tp" id="cell-tp">
+                            <span class="label">TP</span>
+                            <span class="value" id="val-tp">0</span>
+                        </div>
+                        <div class="cell fn" id="cell-fn">
+                            <span class="label">FN</span>
+                            <span class="value" id="val-fn">0</span>
+                        </div>
+
+                        <!-- Row 2 -->
+                        <div class="matrix-header row-header">Actual Negative</div>
+                        <div class="cell fp" id="cell-fp">
+                            <span class="label">FP</span>
+                            <span class="value" id="val-fp">0</span>
+                        </div>
+                        <div class="cell tn" id="cell-tn">
+                            <span class="label">TN</span>
+                            <span class="value" id="val-tn">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metrics-wrapper">
+                    <h2>Performance Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Accuracy</div>
+                            <div class="metric-value" id="metric-accuracy">0%</div>
+                            <div class="metric-desc">(TP + TN) / Total</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Precision</div>
+                            <div class="metric-value" id="metric-precision">0%</div>
+                            <div class="metric-desc">TP / (TP + FP)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Recall</div>
+                            <div class="metric-value" id="metric-recall">0%</div>
+                            <div class="metric-desc">TP / (TP + FN)</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">F1 Score</div>
+                            <div class="metric-value" id="metric-f1">0%</div>
+                            <div class="metric-desc">2 * (P * R) / (P + R)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="explanations">
+                        <h3>Understanding Errors</h3>
+                        <ul class="error-list">
+                            <li><span class="box fp-box"></span> <strong>False Positive (Type I Error)</strong>: Model predicts Positive, but it's actually Negative.</li>
+                            <li><span class="box fn-box"></span> <strong>False Negative (Type II Error)</strong>: Model predicts Negative, but it's actually Positive.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
